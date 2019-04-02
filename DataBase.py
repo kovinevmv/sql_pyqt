@@ -7,6 +7,7 @@ class DataBase:
         self.connection = pymysql.connect(host=host,
                                           user=user,
                                           password=password)
+        self.name = name
 
     def execute(self, sql):
         with self.connection.cursor() as cursor:
@@ -15,7 +16,7 @@ class DataBase:
         return res
 
     def _create_tables(self):
-        self.execute("CREATE DATABASE IF NOT EXISTS `sql` "
+        self.execute(f"CREATE DATABASE IF NOT EXISTS `{self.name}` "
                      "CHARACTER SET utf8mb4 "
                      "COLLATE utf8mb4_unicode_ci")
         self.execute("USE `sql`")
