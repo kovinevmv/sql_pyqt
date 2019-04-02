@@ -32,9 +32,14 @@ class Window(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def set_table(self, tableView, values, header):
         model = self.init_table(tableView, header, len(values))
         for i, d in enumerate(values):
-            for j, (_, value) in enumerate(d.items()):
-                item = QStandardItem(str(value))
-                model.setItem(i, j, item)
+            try:
+                for j, value in enumerate(d):
+                    item = QStandardItem(str(value))
+                    model.setItem(i, j, item)
+            except:
+                for j, (_, value) in enumerate(d.items()):
+                    item = QStandardItem(str(value))
+                    model.setItem(i, j, item)
 
     def query_to_db(self):
         index = self.comboBox.currentIndex()
