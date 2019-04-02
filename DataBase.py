@@ -6,10 +6,7 @@ class DataBase:
                  password='1234', host='127.0.0.1'):
         self.connection = pymysql.connect(host=host,
                                           user=user,
-                                          password=password,
-                                          db=name,
-                                          charset='utf8',
-                                          cursorclass=pymysql.cursors.DictCursor)
+                                          password=password)
 
     def execute(self, sql):
         with self.connection.cursor() as cursor:
@@ -18,6 +15,11 @@ class DataBase:
         return res
 
     def _create_tables(self):
+        self.execute("CREATE DATABASE IF NOT EXISTS `sql` "
+                     "CHARACTER SET utf8mb4 "
+                     "COLLATE utf8mb4_unicode_ci")
+        self.execute("USE `sql`")
+
         tables = {
             'actor': """
         CREATE TABLE actor(
